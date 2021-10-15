@@ -108,34 +108,13 @@ function refresh(){
 }
 
 
-function vertical(direction){
-    let index = 0; 
-    console.table(cardArray);
-    cardArray.forEach((card) =>{
-        console.log(index);
-        if (index<=3){
-            
-        }else {
-            if(cardArray[index-3].name==='white') {
-                cardArray[index-3]=card;
-                cardArray[index]=whiteSpace; 
-            }
-        }        
-        index++;
-        refresh(); //redraw cards        
-    });
-}
-
-
 
 function up(){
     let index = 0; 
     console.table(cardArray);
     cardArray.forEach((card) =>{
         console.log(index);
-        if (index<=3){
-            
-        }else {
+        if (index>=3){        
             if(cardArray[index-3].name==='white') {
                 cardArray[index-3]=card;
                 cardArray[index]=whiteSpace; 
@@ -147,24 +126,33 @@ function up(){
 }
 
 
-function left(){
-    
+
+
+function down(){    
+   console.table(cardArray);
+    for(let i = cardArray.length-1; i>=0; i--){
+        let card = cardArray[i];
+        console.log(i);
+        if (i<=8){        
+            if(cardArray[i+3].name==='white') {
+                cardArray[i+3]=card;
+                cardArray[i]=whiteSpace; 
+            }
+        }        
+        refresh(); //redraw cards        
+    }
 }
 
-function down(){
-    
-}
 
-function right(){
-    
-}
+function left(){ }
+function right(){ }
 
 
 //manages keyboard input and selects function
 function moveCards(event){
     console.log(`key presed: ${event.keyCode}`);
     switch(event.key){
-        case 'ArrowUp' : up();
+        case 'ArrowUp' || 38 : up();
         case 'ArrowLeft' : left();
         case 'ArrowDown' : down();
         case 'ArrowRight' : right();
