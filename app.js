@@ -82,9 +82,10 @@ function createBoard(){
     document.addEventListener('keydown', moveCards);
     
     document.getElementById('up').addEventListener('click',up);
-    //$('#left').addEventListener('click',left);
-    //$('#down').addEventListener('click',down);
-    //$('#right').addEventListener('click',right);
+    document.getElementById('down').addEventListener('click',down);
+    document.getElementById('left').addEventListener('click',left);
+    document.getElementById('right').addEventListener('click',right);
+   
 
     for (let i=0; i<cardArray.length; i++){
         var card = document.createElement('img');
@@ -107,13 +108,10 @@ function refresh(){
     });
 }
 
-
-
 function up(){
+    console.log('up')
     let index = 0; 
-    console.table(cardArray);
     cardArray.forEach((card) =>{
-        console.log(index);
         if (index>=3){        
             if(cardArray[index-3].name==='white') {
                 cardArray[index-3]=card;
@@ -125,14 +123,10 @@ function up(){
     });
 }
 
-
-
-
 function down(){    
-   console.table(cardArray);
-    for(let i = cardArray.length-1; i>=0; i--){
+    console.log('down')
+   for(let i = cardArray.length-1; i>=0; i--){
         let card = cardArray[i];
-        console.log(i);
         if (i<=8){        
             if(cardArray[i+3].name==='white') {
                 cardArray[i+3]=card;
@@ -144,18 +138,61 @@ function down(){
 }
 
 
-function left(){ }
-function right(){ }
+function left(){ 
+    console.log('left')
+    let i = 0;
+    cardArray.forEach((card) =>{
+        if (i%3 != 0){        
+            if(cardArray[i-1].name==='white') {
+               // console.log('shift')
+                cardArray[i-1]=card;
+                cardArray[i]=whiteSpace; 
+            }
+        }     
+        i++;   
+        refresh(); //redraw cards        
+    })
+}
+
+function right(){ 
+    console.log('right')
+    for(let i = cardArray.length-1; i>=0; i--){
+        let card = cardArray[i];
+        //console.log(`i: ${i} %: ${(i-2)%3}`)
+        if ((i-2)%3 !=0){ 
+          //  console.log('shift right')       
+            if(cardArray[i+1].name==='white') {
+                cardArray[i+1]=card;
+                cardArray[i]=whiteSpace; 
+            }
+        }        
+        refresh(); //redraw cards        
+    }
+}
 
 
 //manages keyboard input and selects function
 function moveCards(event){
-    console.log(`key presed: ${event.keyCode}`);
+    //console.log(`key presed: ${event.keyCode}`);
     switch(event.key){
-        case 'ArrowUp' || 38 : up();
-        case 'ArrowLeft' : left();
-        case 'ArrowDown' : down();
-        case 'ArrowRight' : right();
+        case 'ArrowUp': 
+            case 38: 
+                case 87: up(); 
+        break;
+
+        case 'ArrowLeft':
+            case 37:
+                case 65 : left(); 
+        break;
+
+        case 'ArrowDown':
+            case 40 : 
+                case 83 : down();
+        break;
+        case 'ArrowRight':
+            case 39: 
+                case 68: right();
+        break;
     }
 }
 createBoard();
